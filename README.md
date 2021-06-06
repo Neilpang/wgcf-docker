@@ -2,7 +2,7 @@
 Wireguard in docker
 
 
-1. Run single container:
+1. Run a single container:
 
 ```
 
@@ -13,6 +13,17 @@ docker run --rm -it \
     -v $(pwd):/wgcf
     neilpang/wgcf-docker
 
+```
+
+or:
+
+```
+docker run --rm -it \
+    --name wgcf \
+    --sysctl net.ipv6.conf.all.disable_ipv6=0 \
+    --privileged --cap-add net_admin \
+    -v $(pwd):/wgcf
+    neilpang/wgcf-docker:alpine
 
 ```
 
@@ -45,10 +56,40 @@ services:
 
   test:
     image: curlimages/curl
+    network_mode: "service:wgcf"
     depends_on:
       - wgcf
     command: curl ipinfo.io
+
+    
+    
+
+```
+
+or:
+
+```
+
+version: "2.4"
+services:
+  wgcf:
+    image: neilpang/wgcf-docker:alpine
+    volumes:
+      - ./wgcf:/wgcf
+    privileged: true
+    sysctls:
+      net.ipv6.conf.all.disable_ipv6: 0
+    cap_add:
+      - NET_ADMIN
+    
+
+  test:
+    image: curlimages/curl
     network_mode: "service:wgcf"
+    depends_on:
+      - wgcf
+    command: curl ipinfo.io
+
     
     
 
