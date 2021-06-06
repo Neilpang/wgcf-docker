@@ -35,7 +35,7 @@ services:
   wgcf:
     image: neilpang/wgcf-docker:latest
     volumes:
-      - $(pwd)/wgcf:/wgcf
+      - ./wgcf:/wgcf
     privileged: true
     sysctls:
       net.ipv6.conf.all.disable_ipv6: 0
@@ -47,7 +47,7 @@ services:
     image: curlimages/curl
     depends_on:
       - wgcf
-    command: curl ipinfo.io && sleep 10000
+    command: curl ipinfo.io
     network_mode: "service:wgcf"
     
     
