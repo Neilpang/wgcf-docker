@@ -17,7 +17,7 @@ runwgcf() {
   cp wgcf-profile.conf /etc/wireguard/wgcf.conf
 
   DEFAULT_GATEWAY_NETWORK_CARD_NAME=`route  | grep default  | awk '{print $8}' | head -1`
-  DEFAULT_ROUTE_IP=`ifconfig $DEFAULT_GATEWAY_NETWORK_CARD_NAME | grep "inet " | awk '{print $2}'`
+  DEFAULT_ROUTE_IP=`ifconfig $DEFAULT_GATEWAY_NETWORK_CARD_NAME | grep "inet " | awk '{print $2}' | sed "s/addr://"`
   
   echo ${DEFAULT_GATEWAY_NETWORK_CARD_NAME}
   echo ${DEFAULT_ROUTE_IP}
