@@ -31,10 +31,10 @@ runwgcf() {
   
   curl --max-time 2  ipinfo.io
   
+  echo 
   echo "OK, wgcf is up."
-  while true; do
-    sleep 1000000;
-  done
+  
+  trap : TERM INT; sleep infinity & wait
   
   
 }
