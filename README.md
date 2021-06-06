@@ -35,7 +35,7 @@ services:
   wgcf:
     image: neilpang/wgcf-docker:latest
     volumes:
-      - ~/wgcf:/wgcf
+      - $(pwd)/wgcf:/wgcf
     privileged: true
     sysctls:
       net.ipv6.conf.all.disable_ipv6: 0
