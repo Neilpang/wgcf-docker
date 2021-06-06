@@ -10,7 +10,7 @@ docker run --rm -it \
     --name wgcf \
     --sysctl net.ipv6.conf.all.disable_ipv6=0 \
     --privileged --cap-add net_admin \
-    -v $(pwd):/wgcf
+    -v $(pwd):/wgcf \
     neilpang/wgcf-docker
 
 ```
@@ -22,7 +22,7 @@ docker run --rm -it \
     --name wgcf \
     --sysctl net.ipv6.conf.all.disable_ipv6=0 \
     --privileged --cap-add net_admin \
-    -v $(pwd):/wgcf
+    -v $(pwd):/wgcf \
     neilpang/wgcf-docker:alpine
 
 ```
