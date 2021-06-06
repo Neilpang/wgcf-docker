@@ -10,6 +10,7 @@ docker run --rm -it \
     --name wgcf \
     --sysctl net.ipv6.conf.all.disable_ipv6=0 \
     --privileged --cap-add net_admin \
+    -v /lib/modules:/lib/modules \
     -v $(pwd):/wgcf \
     neilpang/wgcf-docker
 
@@ -22,6 +23,7 @@ docker run --rm -it \
     --name wgcf \
     --sysctl net.ipv6.conf.all.disable_ipv6=0 \
     --privileged --cap-add net_admin \
+    -v /lib/modules:/lib/modules \
     -v $(pwd):/wgcf \
     neilpang/wgcf-docker:alpine
 
@@ -47,6 +49,7 @@ services:
     image: neilpang/wgcf-docker:latest
     volumes:
       - ./wgcf:/wgcf
+      - /lib/modules:/lib/modules
     privileged: true
     sysctls:
       net.ipv6.conf.all.disable_ipv6: 0
@@ -76,6 +79,7 @@ services:
     image: neilpang/wgcf-docker:alpine
     volumes:
       - ./wgcf:/wgcf
+      - /lib/modules:/lib/modules
     privileged: true
     sysctls:
       net.ipv6.conf.all.disable_ipv6: 0
