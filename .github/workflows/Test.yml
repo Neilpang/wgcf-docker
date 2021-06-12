@@ -9,7 +9,7 @@ on:
       - '*'
 
 
-Jobs:
+jobs:
   Ubuntu:
     runs-on: ubuntu-latest
     steps:
