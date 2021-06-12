@@ -86,6 +86,7 @@ jobs:
         done
         docker exec -i wgcf curl ipinfo.io
         docker exec -i wgcf curl ipv6.ip.sb
+        docker stop wgcf
         docker rm -f wgcf
 
     - name: Test single container V4
@@ -102,6 +103,7 @@ jobs:
           sleep 1
         done
         docker exec -i wgcf curl ipinfo.io
+        docker stop wgcf
         docker rm -f wgcf
 
     - name: Test single container V6
@@ -118,6 +120,7 @@ jobs:
           sleep 1
         done
         docker exec -i wgcf curl ipv6.ip.sb
+        docker stop wgcf
         docker rm -f wgcf
         
         
@@ -142,6 +145,7 @@ jobs:
         done
         curl ipinfo.io
         curl ipv6.ip.sb
+        docker stop wgcf
         docker rm -f wgcf
 
     - name: Test single container V4
@@ -158,6 +162,7 @@ jobs:
           sleep 1
         done
         wgcf curl ipinfo.io
+        docker stop wgcf
         docker rm -f wgcf
 
     - name: Test single container V6
@@ -174,6 +179,7 @@ jobs:
           sleep 1
         done
         curl ipv6.ip.sb
+        docker stop wgcf
         docker rm -f wgcf
         
   Alpine-HostMode:
@@ -197,6 +203,7 @@ jobs:
         done
         curl ipinfo.io
         curl ipv6.ip.sb
+        docker stop wgcf
         docker rm -f wgcf
 
     - name: Test single container V4
@@ -213,6 +220,7 @@ jobs:
           sleep 1
         done
         curl ipinfo.io
+        docker stop wgcf
         docker rm -f wgcf
 
     - name: Test single container V6
@@ -229,6 +237,7 @@ jobs:
           sleep 1
         done
         curl ipv6.ip.sb
+        docker stop wgcf
         docker rm -f wgcf
         
         
