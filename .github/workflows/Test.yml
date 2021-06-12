@@ -47,6 +47,7 @@ jobs:
           sleep 1
         done
         docker exec -i wgcf curl ipinfo.io
+        docker rm -f wgcf
 
     - name: Test single container V6
       run:  |
@@ -62,6 +63,7 @@ jobs:
           sleep 1
         done
         docker exec -i wgcf curl ipv6.ip.sb
+        docker rm -f wgcf
         
   Alpine:
     runs-on: ubuntu-latest
@@ -100,6 +102,7 @@ jobs:
           sleep 1
         done
         docker exec -i wgcf curl ipinfo.io
+        docker rm -f wgcf
 
     - name: Test single container V6
       run:  |
@@ -115,6 +118,7 @@ jobs:
           sleep 1
         done
         docker exec -i wgcf curl ipv6.ip.sb
+        docker rm -f wgcf
         
         
  
