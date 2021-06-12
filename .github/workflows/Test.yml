@@ -1,0 +1,104 @@
+name: Test
+on:
+  push:
+    branches:
+      - '*'
+
+  pull_request:
+    branches:
+      - '*'
+
+
+Jobs:
+  Ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build image
+      run: docker build -t wg . -f Dockerfile
+    - name: Test single container
+      run:  |
+        docker run --rm -itd \
+        --name wgcf \
+        --sysctl net.ipv6.conf.all.disable_ipv6=0 \
+        --privileged --cap-add net_admin \
+        -v /lib/modules:/lib/modules \
+        -v $(pwd)/wgcf:/wgcf \
+        wg
+        docker exec -it wgcf curl ipinfo.io
+        docker exec -it wgcf curl ipv6.ip.sb
+        docker rm -f wgcf
+
+    - name: Test single container V4
+      run:  |
+        docker run --rm -itd \
+        --name wgcf \
+        --sysctl net.ipv6.conf.all.disable_ipv6=0 \
+        --privileged --cap-add net_admin \
+        -v /lib/modules:/lib/modules \
+        -v $(pwd)/wgcf:/wgcf \
+        wg -4
+        docker exec -it wgcf curl ipinfo.io
+    - name: Test single container V6
+      run:  |
+        docker run --rm -itd \
+        --name wgcf \
+        --sysctl net.ipv6.conf.all.disable_ipv6=0 \
+        --privileged --cap-add net_admin \
+        -v /lib/modules:/lib/modules \
+        -v $(pwd)/wgcf:/wgcf \
+        wg -6
+        docker exec -it wgcf curl ipv6.ip.sb
+        
+  Alpine:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build image
+      run: docker build -t wg-alpine . -f Dockerfile.alpine
+    - name: Test single container
+      run:  |
+        docker run --rm -itd \
+        --name wgcf \
+        --sysctl net.ipv6.conf.all.disable_ipv6=0 \
+        --privileged --cap-add net_admin \
+        -v /lib/modules:/lib/modules \
+        -v $(pwd)/wgcf:/wgcf \
+        wg-alpine
+        docker exec -it wgcf curl ipinfo.io
+        docker exec -it wgcf curl ipv6.ip.sb
+        docker rm -f wgcf
+
+    - name: Test single container V4
+      run:  |
+        docker run --rm -itd \
+        --name wgcf \
+        --sysctl net.ipv6.conf.all.disable_ipv6=0 \
+        --privileged --cap-add net_admin \
+        -v /lib/modules:/lib/modules \
+        -v $(pwd)/wgcf:/wgcf \
+        wg-alpine -4
+        docker exec -it wgcf curl ipinfo.io
+    - name: Test single container V6
+      run:  |
+        docker run --rm -itd \
+        --name wgcf \
+        --sysctl net.ipv6.conf.all.disable_ipv6=0 \
+        --privileged --cap-add net_admin \
+        -v /lib/modules:/lib/modules \
+        -v $(pwd)/wgcf:/wgcf \
+        wg-alpine -6
+        docker exec -it wgcf curl ipv6.ip.sb
+        
+        
+ 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
