@@ -3,8 +3,27 @@
 set -e
 
 
+_downwgcf() {
+  echo
+  echo "clean up"
+  if ! wg-quick down wgcf; then
+    echo "error down"
+  fi
+  echo "clean up done"
+  exit 0
+}
 
+
+
+#-4|-6
 runwgcf() {
+  trap '_downwgcf' ERR TERM INT
+
+  _enableV4="1"
+  if [ "$1" = "-6" ]; then
+    _enableV4=""
+  fi
+
 
   if [ ! -e "wgcf-account.toml" ]; then
     wgcf register --accept-tos
@@ -25,26 +44,47 @@ runwgcf() {
   sed -i "/\[Interface\]/a PostDown = ip rule delete from $DEFAULT_ROUTE_IP  lookup main" /etc/wireguard/wgcf.conf
   sed -i "/\[Interface\]/a PostUp = ip rule add from $DEFAULT_ROUTE_IP lookup main" /etc/wireguard/wgcf.conf
 
+  if [ "$1" = "-6" ]; then
+    sed -i 's/AllowedIPs = 0.0.0.0/#AllowedIPs = 0.0.0.0/' /etc/wireguard/wgcf.conf
+  elif [ "$1" = "-4" ]; then
+    sed -i 's/AllowedIPs = ::/#AllowedIPs = ::/' /etc/wireguard/wgcf.conf
+  fi
 
 
+  modprobe ip6table_raw
+  
   wg-quick up wgcf
   
-  curl --max-time 2  ipinfo.io
-  
+  if [ "$_enableV4" ]; then
+    _checkV4
+  fi
+
   echo 
   echo "OK, wgcf is up."
   
-  trap : TERM INT; sleep infinity & wait
+
+  sleep infinity & wait
   
   
+}
+
+_checkV4() {
+  echo "Checking network status, please wait...."
+  while ! curl --max-time 2  ipinfo.io; do
+    wg-quick down wgcf
+    echo "Sleep 2 and retry again."
+    sleep 2
+    wg-quick up wgcf
+  done
+
+
 }
 
 
 
 
 
-
-if [ -z "$@" ]; then
+if [ -z "$@" ] || [[ "$1" = -* ]]; then
   runwgcf "$@"
 else
   exec "$@"
