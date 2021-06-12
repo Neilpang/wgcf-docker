@@ -161,7 +161,7 @@ jobs:
           echo wait
           sleep 1
         done
-        wgcf curl ipinfo.io
+        curl ipinfo.io
         docker stop wgcf
         docker rm -f wgcf
 
