@@ -121,7 +121,128 @@ jobs:
         docker rm -f wgcf
         
         
+  Ubuntu-HostMode:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build image
+      run: docker build -t wg . -f Dockerfile
+    - name: Test single container
+      run:  |
+        docker run --rm -id \
+        --name wgcf \
+        --net=host \
+        --privileged --cap-add net_admin \
+        -v /lib/modules:/lib/modules \
+        -v $(pwd)/wgcf:/wgcf \
+        wg
+        while ! docker logs wgcf | grep "OK, wgcf is up"; do
+          echo wait
+          sleep 1
+        done
+        curl ipinfo.io
+        curl ipv6.ip.sb
+        docker rm -f wgcf
+
+    - name: Test single container V4
+      run:  |
+        docker run --rm -id \
+        --name wgcf \
+        --net=host \
+        --privileged --cap-add net_admin \
+        -v /lib/modules:/lib/modules \
+        -v $(pwd)/wgcf:/wgcf \
+        wg -4
+        while ! docker logs wgcf | grep "OK, wgcf is up"; do
+          echo wait
+          sleep 1
+        done
+        wgcf curl ipinfo.io
+        docker rm -f wgcf
+
+    - name: Test single container V6
+      run:  |
+        docker run --rm -id \
+        --name wgcf \
+        --net=host \
+        --privileged --cap-add net_admin \
+        -v /lib/modules:/lib/modules \
+        -v $(pwd)/wgcf:/wgcf \
+        wg -6
+        while ! docker logs wgcf | grep "OK, wgcf is up"; do
+          echo wait
+          sleep 1
+        done
+        curl ipv6.ip.sb
+        docker rm -f wgcf
+        
+  Alpine-HostMode:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build image
+      run: docker build -t wg-alpine . -f Dockerfile.alpine
+    - name: Test single container
+      run:  |
+        docker run --rm -id \
+        --name wgcf \
+        --net=host \
+        --privileged --cap-add net_admin \
+        -v /lib/modules:/lib/modules \
+        -v $(pwd)/wgcf:/wgcf \
+        wg-alpine
+        while ! docker logs wgcf | grep "OK, wgcf is up"; do
+          echo wait
+          sleep 1
+        done
+        curl ipinfo.io
+        curl ipv6.ip.sb
+        docker rm -f wgcf
+
+    - name: Test single container V4
+      run:  |
+        docker run --rm -id \
+        --name wgcf \
+        --net=host \
+        --privileged --cap-add net_admin \
+        -v /lib/modules:/lib/modules \
+        -v $(pwd)/wgcf:/wgcf \
+        wg-alpine -4
+        while ! docker logs wgcf | grep "OK, wgcf is up"; do
+          echo wait
+          sleep 1
+        done
+        curl ipinfo.io
+        docker rm -f wgcf
+
+    - name: Test single container V6
+      run:  |
+        docker run --rm -id \
+        --name wgcf \
+        --net=host \
+        --privileged --cap-add net_admin \
+        -v /lib/modules:/lib/modules \
+        -v $(pwd)/wgcf:/wgcf \
+        wg-alpine -6
+        while ! docker logs wgcf | grep "OK, wgcf is up"; do
+          echo wait
+          sleep 1
+        done
+        curl ipv6.ip.sb
+        docker rm -f wgcf
+        
+        
  
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         
