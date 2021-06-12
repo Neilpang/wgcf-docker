@@ -25,6 +25,10 @@ jobs:
         -v /lib/modules:/lib/modules \
         -v $(pwd)/wgcf:/wgcf \
         wg
+        while ! docker logs wgcf | grep "OK, wgcf is up"; do
+          echo wait
+          sleep 1
+        done
         docker exec -i wgcf curl ipinfo.io
         docker exec -i wgcf curl ipv6.ip.sb
         docker rm -f wgcf
@@ -38,7 +42,12 @@ jobs:
         -v /lib/modules:/lib/modules \
         -v $(pwd)/wgcf:/wgcf \
         wg -4
+        while ! docker logs wgcf | grep "OK, wgcf is up"; do
+          echo wait
+          sleep 1
+        done
         docker exec -i wgcf curl ipinfo.io
+
     - name: Test single container V6
       run:  |
         docker run --rm -id \
@@ -48,6 +57,10 @@ jobs:
         -v /lib/modules:/lib/modules \
         -v $(pwd)/wgcf:/wgcf \
         wg -6
+        while ! docker logs wgcf | grep "OK, wgcf is up"; do
+          echo wait
+          sleep 1
+        done
         docker exec -i wgcf curl ipv6.ip.sb
         
   Alpine:
@@ -65,6 +78,10 @@ jobs:
         -v /lib/modules:/lib/modules \
         -v $(pwd)/wgcf:/wgcf \
         wg-alpine
+        while ! docker logs wgcf | grep "OK, wgcf is up"; do
+          echo wait
+          sleep 1
+        done
         docker exec -i wgcf curl ipinfo.io
         docker exec -i wgcf curl ipv6.ip.sb
         docker rm -f wgcf
@@ -78,7 +95,12 @@ jobs:
         -v /lib/modules:/lib/modules \
         -v $(pwd)/wgcf:/wgcf \
         wg-alpine -4
+        while ! docker logs wgcf | grep "OK, wgcf is up"; do
+          echo wait
+          sleep 1
+        done
         docker exec -i wgcf curl ipinfo.io
+
     - name: Test single container V6
       run:  |
         docker run --rm -id \
@@ -88,6 +110,10 @@ jobs:
         -v /lib/modules:/lib/modules \
         -v $(pwd)/wgcf:/wgcf \
         wg-alpine -6
+        while ! docker logs wgcf | grep "OK, wgcf is up"; do
+          echo wait
+          sleep 1
+        done
         docker exec -i wgcf curl ipv6.ip.sb
         
         
