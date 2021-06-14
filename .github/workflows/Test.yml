@@ -33,7 +33,7 @@ jobs:
         docker exec -i wgcf curl ipv6.ip.sb
         docker run --rm   --network container:wgcf  curlimages/curl curl ipinfo.io
         docker run --rm   --network container:wgcf  curlimages/curl curl ipv6.ip.sb
-        docker rm -f wgcf
+        docker stop wgcf
 
     - name: Test single container V4
       run:  |
@@ -50,7 +50,7 @@ jobs:
         done
         docker exec -i wgcf curl ipinfo.io
         docker run --rm   --network container:wgcf  curlimages/curl curl ipinfo.io
-        docker rm -f wgcf
+        docker stop wgcf
 
     - name: Test single container V6
       run:  |
@@ -67,7 +67,7 @@ jobs:
         done
         docker exec -i wgcf curl ipv6.ip.sb
         docker run --rm   --network container:wgcf  curlimages/curl curl ipv6.ip.sb
-        docker rm -f wgcf
+        docker stop wgcf
         
   Alpine:
     runs-on: ubuntu-latest
@@ -93,7 +93,7 @@ jobs:
         docker run --rm   --network container:wgcf  curlimages/curl curl ipinfo.io
         docker run --rm   --network container:wgcf  curlimages/curl curl ipv6.ip.sb
         docker stop wgcf
-        docker rm -f wgcf
+
 
     - name: Test single container V4
       run:  |
@@ -111,7 +111,7 @@ jobs:
         docker exec -i wgcf curl ipinfo.io
         docker run --rm   --network container:wgcf  curlimages/curl curl ipinfo.io
         docker stop wgcf
-        docker rm -f wgcf
+
 
     - name: Test single container V6
       run:  |
@@ -129,7 +129,7 @@ jobs:
         docker exec -i wgcf curl ipv6.ip.sb
         docker run --rm   --network container:wgcf  curlimages/curl curl ipv6.ip.sb
         docker stop wgcf
-        docker rm -f wgcf
+
         
         
   Ubuntu-HostMode:
@@ -154,7 +154,7 @@ jobs:
         curl ipinfo.io
         curl ipv6.ip.sb
         docker stop wgcf
-        docker rm -f wgcf
+
 
     - name: Test single container V4
       run:  |
@@ -171,7 +171,7 @@ jobs:
         done
         curl ipinfo.io
         docker stop wgcf
-        docker rm -f wgcf
+
 
     - name: Test single container V6
       run:  |
@@ -188,7 +188,7 @@ jobs:
         done
         curl ipv6.ip.sb
         docker stop wgcf
-        docker rm -f wgcf
+
         
   Alpine-HostMode:
     runs-on: ubuntu-latest
@@ -212,7 +212,7 @@ jobs:
         curl ipinfo.io
         curl ipv6.ip.sb
         docker stop wgcf
-        docker rm -f wgcf
+
 
     - name: Test single container V4
       run:  |
@@ -229,7 +229,7 @@ jobs:
         done
         curl ipinfo.io
         docker stop wgcf
-        docker rm -f wgcf
+
 
     - name: Test single container V6
       run:  |
@@ -246,7 +246,6 @@ jobs:
         done
         curl ipv6.ip.sb
         docker stop wgcf
-        docker rm -f wgcf
         
         
  
