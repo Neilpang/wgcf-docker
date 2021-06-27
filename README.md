@@ -1,5 +1,5 @@
 # wgcf-docker
-Wireguard in docker
+CloudFlare warp in docker
 
 
 1. Run a single container:
