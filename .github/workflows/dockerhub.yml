@@ -4,8 +4,7 @@ on:
   push:
     branches:
       - '*'
-    paths:
-      - '!*.md'
+
 
 
 jobs:
