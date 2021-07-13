@@ -4,12 +4,14 @@ on:
     branches:
       - '*'
     paths:
+      - '**'
       - '!**.md'
 
   pull_request:
     branches:
       - '*'
     paths:
+      - '**'
       - '!**.md'
 
 
