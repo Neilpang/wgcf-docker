@@ -5,9 +5,8 @@ on:
     branches:
       - '*'
     paths:
-      - '!**.md'
-    tags:
-      - '*'
+      - '!*.md'
+
 
 jobs:
   multiarch-build-debian:
