@@ -57,6 +57,8 @@ runwgcf() {
   
   if [ "$_enableV4" ]; then
     _checkV4
+  else
+    _checkV6
   fi
 
   echo 
@@ -80,7 +82,17 @@ _checkV4() {
 
 }
 
+_checkV6() {
+  echo "Checking network status, please wait...."
+  while ! curl --max-time 2 -6 ipv6.google.com; do
+    wg-quick down wgcf
+    echo "Sleep 2 and retry again."
+    sleep 2
+    wg-quick up wgcf
+  done
 
+
+}
 
 
 
