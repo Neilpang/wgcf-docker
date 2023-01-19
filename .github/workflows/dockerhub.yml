@@ -1,7 +1,6 @@
 name: DockerHub
 
 on:
-  workflow_dispatch:
   push:
     branches:
       - '*'
@@ -23,7 +22,7 @@ jobs:
         uses: crazy-max/ghaction-docker-meta@v2
         with:
           images: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/wgcf-docker
+            neilpang/wgcf-docker
           tags: |
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
@@ -67,7 +66,7 @@ jobs:
         uses: crazy-max/ghaction-docker-meta@v2
         with:
           images: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/wgcf-docker
+            neilpang/wgcf-docker
           tags: |
             type=semver,suffix=-alpine,pattern={{version}}
             type=semver,suffix=-alpine,pattern={{major}}.{{minor}}

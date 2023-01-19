@@ -1,5 +1,3 @@
-FROM virb3/wgcf:2.2 AS builder
-
 FROM alpine:3
 
 
@@ -11,8 +9,7 @@ RUN apk update -f \
   && rm -rf /var/cache/apk/*
   
   
-COPY --from=builder "/wgcf" "/usr/local/bin/wgcf"
-RUN mkdir -p /wgcf
+RUN curl -fsSL git.io/wgcf.sh | bash && mkdir -p /wgcf
 
 WORKDIR /wgcf
 
