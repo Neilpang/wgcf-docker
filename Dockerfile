@@ -1,11 +1,11 @@
-FROM ubuntu:20.04
+FROM alpine:3
 
-
-RUN apt-get update && apt-get install -y \
+RUN apk update -f \
+  && apk --no-cache add -f \
   curl ca-certificates \
   iproute2 net-tools iptables \
-  wireguard-tools openresolv  kmod --no-install-recommends \
-  && rm -rf /var/lib/apt/lists/*
+  wireguard-tools openresolv \
+  && rm -rf /var/cache/apk/*
   
   
 RUN curl -fsSL git.io/wgcf.sh | bash && mkdir -p /wgcf
@@ -19,5 +19,3 @@ COPY entry.sh /entry.sh
 RUN chmod +x /entry.sh
 
 ENTRYPOINT ["/entry.sh"]
-
-
