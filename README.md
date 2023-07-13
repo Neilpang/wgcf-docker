@@ -99,7 +99,7 @@ docker run --rm -it \
 
 
 
-2. If aonther container needs to use the wgcf network, run it like:
+2. If another container needs to use the wgcf network, run it like:
 
 ```
 
